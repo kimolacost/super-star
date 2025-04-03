@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة تحكم المسؤول</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f9f9f9;
+      color: #333;
+      direction: rtl; /* ضمان الكتابة من اليمين إلى اليسار */
+    }
+    h1 {
+      text-align: center;
+    }
+    form {
+      max-width: 400px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    input[type="text"], input[type="number"], input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    button {
+      background-color: #ff6f61;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+    .products-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+    .product-item {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      width: 200px;
+      text-align: center;
+      padding: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .product-item img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>لوحة تحكم المسؤول</h1>
+  <form id="addProductForm">
+    <h2>إضافة منتج جديد</h2>
+    <label for="newProductName">اسم المنتج:</label>
+    <input type="text" id="newProductName" placeholder="اسم المنتج" required>
+
+    <label for="newProductPrice">السعر:</label>
+    <input type="number" id="newProductPrice" placeholder="السعر" required>
+
+    <label for="newProductImage">صورة المنتج:</label>
+    <input type="file" id="newProductImage" accept="image/*" required>
+
+    <button type="button" onclick="addProduct()">إضافة المنتج</button>
+  </form>
+
+  <!-- قائمة المنتجات -->
+  <div class="products-list" id="productsList">
+    <!-- المنتجات ستظهر هنا ديناميكيًا -->
+  </div>
+
+  <script>
+    // إضافة منتج جديد
+    function addProduct() {
+      const productName = document.getElementById('newProductName').value;
+      const productPrice = document.getElementById('newProductPrice').value;
+      const productImageInput = document.getElementById('newProductImage');
+
+      if (!productName || !productPrice || !productImageInput.files.length) {
+        alert('يرجى ملء جميع الحقول واختيار صورة!');
+        return;
+      }
+
+      // الحصول على الصورة المختارة
+      const productImage = productImageInput.files[0];
+      const productImageUrl = URL.createObjectURL(productImage);
+
+      // إنشاء عنصر منتج جديد
+      const productDiv = document.createElement('div');
+      productDiv.className = 'product-item';
+      productDiv.innerHTML = `
+        <img src="${productImageUrl}" alt="${productName}">
+        <h3>${productName}</h3>
+        <p class="price">سعر: ${productPrice} دينار جزائري</p>
+      `;
+
+      // إضافة المنتج إلى القائمة
+      document.getElementById('productsList').appendChild(productDiv);
+
+      // مسح الحقول بعد الإضافة
+      document.getElementById('newProductName').value = '';
+      document.getElementById('newProductPrice').value = '';
+      productImageInput.value = ''; // مسح حقل الصورة
+
+      alert(`تم إضافة المنتج: ${productName} بسعر: ${productPrice} دينار جزائري`);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>متجر الأحذية والنعال</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      color: #333;
+      direction: rtl; /* ضمان الكتابة من اليمين إلى اليسار */
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #fff;
+      padding: 10px 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .social-icons a {
+      margin-left: 10px;
+      text-decoration: none;
+      color: #333;
+    }
+    .admin-login-link {
+      background-color: #ff6f61;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .login-form {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+    .product-card {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      width: 200px;
+      text-align: center;
+      padding: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .product-card img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">متجر الأحذية والنعال</div>
+    <div class="social-icons">
+      <a href="https://wa.me/213698526130" target="_blank">واتساب</a>
+      <a href="https://www.instagram.com/karim_douar10?igsh=enpxaTByd2VmZWps" target="_blank">إنستغرام</a>
+      <button class="admin-login-link" onclick="openLoginForm()">دخول المسؤول</button>
+    </div>
+  </header>
+
+  <!-- Login Form -->
+  <div class="overlay" id="loginOverlay"></div>
+  <form class="login-form" id="loginForm">
+    <h2>تسجيل دخول المسؤول</h2>
+    <input type="email" id="adminEmail" placeholder="أدخل البريد الإلكتروني" required>
+    <input type="password" id="adminPassword" placeholder="أدخل كلمة المرور" required>
+    <button type="button" onclick="checkAdminLogin()">دخول</button>
+  </form>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div>
+      <h1>احصل على أفضل الأحذية بأسعار تنافسية</h1>
+      <button onclick="location.href='#products'">تسوق الآن</button>
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <section id="products" class="products">
+    <div class="product-card" data-name="حذاء رجالي" data-price="5000">
+      <img src="shoe1.jpg" alt="حذاء رجالي">
+      <h3>حذاء رجالي</h3>
+      <p class="price">سعر: 5000 دينار جزائري</p>
+      <button onclick="openOrderForm('حذاء رجالي', 5000)">اطلب الآن</button>
+    </div>
+    <div class="product-card" data-name="حذاء نسائي" data-price="4000">
+      <img src="shoe2.jpg" alt="حذاء نسائي">
+      <h3>حذاء نسائي</h3>
+      <p class="price">سعر: 4000 دينار جزائري</p>
+      <button onclick="openOrderForm('حذاء نسائي', 4000)">اطلب الآن</button>
+    </div>
+    <div class="product-card" data-name="نعال منزلية" data-price="2500">
+      <img src="slippers.jpg" alt="نعال منزلية">
+      <h3>نعال منزلية</h3>
+      <p class="price">سعر: 2500 دينار جزائري</p>
+      <button onclick="openOrderForm('نعال منزلية', 2500)">اطلب الآن</button>
+    </div>
+  </section>
+
+  <!-- Order Form -->
+  <div class="overlay" id="orderOverlay"></div>
+  <form class="order-form" id="orderForm">
+    <h2>طلب المنتج</h2>
+    <input type="text" id="orderName" placeholder="اسم المنتج" readonly>
+    <input type="number" id="orderPrice" placeholder="السعر" readonly>
+    <input type="number" id="orderSize" placeholder="المقاس" required>
+    <input type="tel" id="orderPhone" placeholder="رقم الهاتف" required>
+    <textarea id="orderAddress" placeholder="عنوان التوصيل" required></textarea>
+    <button type="button" onclick="sendToInstagram()">تأكيد الطلب</button>
+  </form>
+
+  <!-- Footer -->
+  <footer>
+    <p>للاستفسارات والطلبات، يُرجى التواصل عبر:</p>
+    <p>
+      الواتساب: 
+      <a href="https://wa.me/213698526130" target="_blank">+213 698 52 61 30</a>
+    </p>
+    <p>
+      أو تابعونا على إنستغرام: 
+      <a href="https://www.instagram.com/karim_douar10?igsh=enpxaTByd2VmZWps" target="_blank">@karim_douar10</a>
+    </p>
+    <p><a href="#">اتصل بنا</a> | <a href="#">سياسة الخصوصية</a></p>
+    <p>جميع الحقوق محفوظة © 2023 متجر الأحذية والنعال</p>
+  </footer>
+
+  <script>
+    // فتح نموذج تسجيل دخول المسؤول
+    function openLoginForm() {
+      document.getElementById('loginOverlay').style.display = 'block';
+      document.getElementById('loginForm').style.display = 'block';
+    }
+
+    // التحقق من بيانات المسؤول
+    function checkAdminLogin() {
+      const email = document.getElementById('adminEmail').value;
+      const password = document.getElementById('adminPassword').value;
+
+      // بيانات المسؤول
+      const adminEmail = "kimolacost123@gmail.com";
+      const adminPassword = "karim123karim";
+
+      if (email === adminEmail && password === adminPassword) {
+        alert("مرحبًا بك يا مسؤول!");
+        window.location.href = "admin-dashboard.html"; // توجيه إلى لوحة التحكم
+      } else {
+        alert("بيانات الدخول غير صحيحة. حاول مرة أخرى.");
+      }
+    }
+
+    // فتح نموذج الطلب
+    function openOrderForm(name, price) {
+      document.getElementById('orderOverlay').style.display = 'block';
+      document.getElementById('orderForm').style.display = 'block';
+
+      // ملء اسم المنتج والسعر تلقائيًا
+      document.getElementById('orderName').value = name;
+      document.getElementById('orderPrice').value = price + ' دينار جزائري';
+    }
+
+    // إرسال الطلب إلى إنستغرام
+    function sendToInstagram() {
+      const productName = document.getElementById('orderName').value;
+      const productPrice = document.getElementById('orderPrice').value;
+      const size = document.getElementById('orderSize').value;
+      const phone = document.getElementById('orderPhone').value;
+      const address = document.getElementById('orderAddress').value;
+
+      if (!size || !phone || !address) {
+        alert('يرجى ملء جميع الحقول!');
+        return;
+      }
+
+      // إنشاء رسالة جاهزة
+      const message = encodeURIComponent(
+        `مرحبًا، أرغب في طلب:\n` +
+        `- المنتج: ${productName}\n` +
+        `- السعر: ${productPrice}\n` +
+        `- المقاس: ${size}\n` +
+        `- رقم الهاتف: ${phone}\n` +
+        `- عنوان التوصيل: ${address}`
+      );
+
+      // رابط إنستغرام مع الرسالة الجاهزة
+      const instagramLink = `https://www.instagram.com/direct/t/karim_douar10?text=${message}`;
+
+      // فتح صفحة الرسائل المباشرة على إنستغرام
+      window.open(instagramLink, '_blank');
+
+      // إخفاء النموذج بعد الإرسال
+      document.getElementById('orderOverlay').style.display = 'none';
+      document.getElementById('orderForm').style.display = 'none';
+
+      // مسح الحقول بعد الإرسال
+      document.getElementById('orderSize').value = '';
+      document.getElementById('orderPhone').value = '';
+      document.getElementById('orderAddress').value = '';
+    }
+  </script>
+
+</body>
+</html>
